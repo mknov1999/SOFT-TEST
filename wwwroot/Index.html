@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>AV Soft</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>HTML COUNT(Таблица 2)</h1>
+        </div>
+    </header>
+    <div class="container">
+        <a href="/">Back to Home Page</a>
+        <table class="table table-condensed table-striped  col-md-6">
+            <thead><tr><th>KEY</th><th>COUNT</th><th>COUNTMORETHENONE</th></tr></thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - AVSoft
+        </div>
+    </footer>
+
+    <script>
+        async function GetKeys() {
+            // отправляет запрос и получаем ответ
+            const response = await fetch("/api/HTML", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            // если запрос прошел нормально
+            if (response.ok === true) {
+                // получаем данные
+                const keys = await response.json();
+                let rows = document.querySelector("tbody");
+                keys.forEach(key => {
+                    // добавляем полученные элементы в таблицу
+                    rows.append(row(key));
+                });
+            }
+        }
+        async function GetKey(id) {
+            const response = await fetch("/api/HTML/" + id, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const key = await response.json();
+            }
+        }
+        async function CreateUser(tabKey, tabCount, tabCMTO) {
+
+            const response = await fetch("api/HTML", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    key: parseInt(tabKey, 10),
+                    count: parseInt(tabCount, 10),
+                    countmorethenone: parseInt(tabCMTO, 10)
+                })
+            });
+            if (response.ok === true) {
+                const key = await response.json();
+                reset();
+                document.querySelector("tbody").append(row(key));
+            }
+        }
+        function row(key) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", key.id);
+
+            const KeyTd = document.createElement("td");
+            KeyTd.append(key.key);
+            tr.append(KeyTd);
+
+            const CountTd = document.createElement("td");
+            CountTd.append(key.count);
+            tr.append(CountTd);
+
+            const CMTOTd = document.createElement("td");
+            CMTOTd.append(key.countmorethenone);
+            tr.append(CMTOTd);
+
+            return tr;
+        }
+        GetKeys();
+    </script>
+</body>
+</html>

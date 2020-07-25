@@ -1,0 +1,38 @@
+﻿@model IEnumerable<AV_Soft.Model.Tab2>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Counters(Таблица 2)</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KEY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.COUNT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.COUNTMORETHENONE)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KEY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.COUNT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.COUNTMORETHENONE)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

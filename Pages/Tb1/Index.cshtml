@@ -1,0 +1,54 @@
+﻿@page
+@model AV_Soft.Pages.Tb1.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Keys(Таблица 1)</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Key:
+            <input type="text" name="searchKey" value="@Model.FilterKey" />
+            Find by Value:
+            <input type="text" name="searchValue" value="@Model.FilterValue" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tab1[0].KEY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tab1[0].VALUE)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Tab1) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KEY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VALUE)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
